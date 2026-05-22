@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; margin: 60px; color: #222; line-height: 1.6; }
+  h1 { color: #1a1a2e; border-bottom: 3px solid #0f3460; padding-bottom: 10px; font-size: 24px; }
+  h2 { color: #0f3460; font-size: 18px; margin-top: 30px; }
+  .subtitle { color: #555; font-size: 14px; margin-bottom: 30px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th { background: #0f3460; color: white; padding: 10px 15px; text-align: left; font-size: 14px; }
+  td { padding: 10px 15px; border-bottom: 1px solid #ddd; font-size: 14px; }
+  tr:nth-child(even) { background: #f5f5f5; }
+  .section { margin-bottom: 25px; }
+  .highlight { background: #e8f0fe; padding: 15px; border-left: 4px solid #0f3460; margin: 15px 0; font-size: 14px; }
+  .warning { background: #fff3e0; padding: 15px; border-left: 4px solid #e65100; margin: 15px 0; font-size: 14px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 8px; font-size: 14px; }
+  .tag { display: inline-block; background: #0f3460; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; margin-right: 5px; }
+  .tag-green { background: #2e7d32; }
+  .footer { margin-top: 40px; border-top: 1px solid #ccc; padding-top: 15px; font-size: 12px; color: #777; }
+</style>
+</head>
+<body>
+
+<h1>Brief del Ejercicio — Sistema de Facturación</h1>
+<p class="subtitle">Taller Práctico | Desarrollo con IA usando Metodología SDD</p>
+
+<h2>1. Descripción del Ejercicio</h2>
+<div class="section">
+  <p>Construir un sistema web de facturación para una empresa pequeña en Ecuador, aplicando la metodología <strong>Spec-Driven Development (SDD)</strong> con asistencia de IA. El sistema se desarrollará de punta a punta: desde la especificación hasta el deploy en producción.</p>
+</div>
+
+<h2>2. Módulos del Sistema</h2>
+<table>
+  <tr>
+    <th>Módulo</th>
+    <th>Funcionalidad</th>
+    <th>Detalle</th>
+  </tr>
+  <tr>
+    <td><strong>Usuarios</strong></td>
+    <td>Registro, Login, Logout</td>
+    <td>1 solo rol, autenticación JWT</td>
+  </tr>
+  <tr>
+    <td><strong>Clientes</strong></td>
+    <td>CRUD completo</td>
+    <td>Validación cédula/RUC Ecuador</td>
+  </tr>
+  <tr>
+    <td><strong>Productos</strong></td>
+    <td>CRUD completo + Stock</td>
+    <td>Precio unitario, flag IVA, cantidad en stock</td>
+  </tr>
+  <tr>
+    <td><strong>Facturas</strong></td>
+    <td>Crear factura con detalle</td>
+    <td>Cabecera + líneas de detalle, cálculo automático</td>
+  </tr>
+  <tr>
+    <td><strong>Reportes</strong></td>
+    <td>Consultas y listados</td>
+    <td>Ventas por período, por cliente, productos más vendidos</td>
+  </tr>
+</table>
+
+<h2>3. Reglas de Negocio Principales</h2>
+<div class="section">
+  <ul>
+    <li><strong>IVA:</strong> 15% (tarifa vigente Ecuador). Se aplica solo a productos marcados con IVA.</li>
+    <li><strong>Cálculo:</strong> Subtotal 0% + Subtotal 15% + IVA = Total</li>
+    <li><strong>Numeración:</strong> Secuencial automática (FAC-000001, FAC-000002...)</li>
+    <li><strong>Estados:</strong> EMITIDA → ANULADA (no se eliminan facturas)</li>
+    <li><strong>Autenticación:</strong> JWT con expiración de 8 horas</li>
+  </ul>
+</div>
+
+<h2>4. Alcance por Versión</h2>
+
+<div class="highlight">
+  <strong>v1 — Lo que construimos en el taller:</strong>
+  <ul>
+    <li>CRUD completo de Usuarios, Clientes y Productos</li>
+    <li>Creación y anulación de facturas con detalle</li>
+    <li>Reportes básicos</li>
+    <li>Al crear factura <strong>NO</strong> se resta stock del producto</li>
+  </ul>
+</div>
+
+<div class="warning">
+  <strong>v2 — Ejercicio final (mejora):</strong>
+  <ul>
+    <li>Al crear factura se <strong>descuenta automáticamente</strong> el stock del producto</li>
+    <li>Validación de stock suficiente antes de emitir</li>
+  </ul>
+</div>
+
+<h2>5. Stack Tecnológico</h2>
+<table>
+  <tr>
+    <th>Capa</th>
+    <th>Tecnología</th>
+    <th>Hosting</th>
+    <th>Costo</th>
+  </tr>
+  <tr>
+    <td>Frontend</td>
+    <td>React + Vite + TypeScript</td>
+    <td>Netlify</td>
+    <td><span class="tag tag-green">Gratis</span></td>
+  </tr>
+  <tr>
+    <td>Backend</td>
+    <td>Express + TypeScript</td>
+    <td>Render</td>
+    <td><span class="tag tag-green">Gratis</span></td>
+  </tr>
+  <tr>
+    <td>Base de datos</td>
+    <td>PostgreSQL</td>
+    <td>Supabase</td>
+    <td><span class="tag tag-green">Gratis</span></td>
+  </tr>
+  <tr>
+    <td>IDE + IA</td>
+    <td>Kiro IDE</td>
+    <td>Local</td>
+    <td><span class="tag tag-green">Gratis</span></td>
+  </tr>
+</table>
+
+<h2>6. Metodología: Spec-Driven Development (SDD)</h2>
+<div class="section">
+  <p>La especificación es la fuente de verdad. El flujo de trabajo es:</p>
+  <ol>
+    <li><strong>Especificar</strong> — Definir qué se construye (historias, flujos, reglas)</li>
+    <li><strong>Diseñar</strong> — Arquitectura y modelo de datos (C4, DDL)</li>
+    <li><strong>Implementar</strong> — La IA genera código a partir de la spec</li>
+    <li><strong>Validar</strong> — Tests y verificación contra la spec</li>
+    <li><strong>Desplegar</strong> — Push y deploy automático</li>
+  </ol>
+</div>
+
+<h2>7. Lo que NO incluye el ejercicio</h2>
+<div class="section">
+  <ul>
+    <li>Sistema de inventario completo (solo campo stock)</li>
+    <li>Múltiples roles o permisos</li>
+    <li>Recuperación de contraseña (requiere servicio de email)</li>
+    <li>Generación de PDF</li>
+    <li>Facturación electrónica (SRI)</li>
+  </ul>
+</div>
+
+<div class="footer">
+  <p>Vibe Coding | Taller Práctico — Sistema de Facturación con IA</p>
+</div>
+
+</body>
+</html>
